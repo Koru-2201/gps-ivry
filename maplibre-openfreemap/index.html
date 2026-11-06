@@ -3,506 +3,397 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Navigation GPS Ivry - MapLibre (OpenFreeMap Waze Style)</title>
-
-  <!-- MapLibre GL JS CSS -->
+  <title>Waze GPS - Feux 94 & P13</title>
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" />
-
   <style>
-    /* Reset & Plein écran */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-    }
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background-color: #0d1117;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
-    #map {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
+    html, body { width: 100%; height: 100%; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0b132b; }
+    #map { width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 1; }
+    .maplibregl-ctrl { display: none !important; }
 
-    /* Masquer les attributions/boussoles MapLibre par défaut */
-    .maplibregl-ctrl-bottom-right,
-    .maplibregl-ctrl-bottom-left,
-    .maplibregl-ctrl-top-right,
-    .maplibregl-ctrl-top-left {
-      display: none !important;
-    }
-
-    /* Flèche de navigation Waze fixe au 2/3 bas de l'écran */
-    #nav-cursor-container {
+    /* Curseur Flèche Waze fixe au 2/3 bas */
+    #nav-cursor {
       position: absolute;
       top: 68%;
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 100;
       pointer-events: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
     .waze-arrow {
       width: 46px;
       height: 46px;
-      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.55));
+      filter: drop-shadow(0 5px 12px rgba(0,0,0,0.55));
     }
 
-    /* Bannière de nom de rue en bas (Style Waze) */
+    /* Bandeau Rue Waze en bas */
     #street-banner {
       position: absolute;
       bottom: 22px;
       left: 14px;
       right: 14px;
       z-index: 120;
-      background: rgba(18, 24, 38, 0.94);
-      color: #FFFFFF;
-      padding: 13px 18px;
+      background: rgba(15, 23, 42, 0.94);
+      color: #fff;
+      padding: 12px 16px;
       border-radius: 18px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
-      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.12);
+      transition: background 0.3s, color 0.3s;
+    }
+    body.light-theme #street-banner {
+      background: rgba(255, 255, 255, 0.95);
+      color: #0f172a;
+      border: 1px solid rgba(0,0,0,0.08);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    #street-text {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      margin-right: 8px;
+    }
+    #street-text small {
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    #street-name {
       font-size: 17px;
       font-weight: 700;
-      letter-spacing: 0.2px;
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.14);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      transition: all 0.3s ease;
-      pointer-events: auto;
-    }
-    #street-banner.day-mode {
-      background: rgba(255, 255, 255, 0.95);
-      color: #1a1e29;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    }
-    #street-banner small {
-      display: block;
-      font-size: 11px;
-      font-weight: 500;
-      color: #8c9cb8;
-      text-transform: uppercase;
-      margin-bottom: 2px;
-    }
-    #street-banner.day-mode small {
-      color: #5c6b84;
     }
 
-    /* Badge permanent de précision GPS (en bas à gauche) */
+    /* Badge Précision GPS */
     #gps-badge {
       position: absolute;
-      bottom: 86px;
-      left: 16px;
+      bottom: 84px;
+      left: 14px;
       z-index: 120;
       padding: 6px 12px;
       border-radius: 20px;
       font-size: 13px;
       font-weight: 800;
-      letter-spacing: 0.4px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.35);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      backdrop-filter: blur(8px);
-      pointer-events: auto;
       border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(8px);
     }
-    .gps-good {
-      background: rgba(22, 163, 74, 0.92);
-      color: #FFFFFF;
-    }
-    .gps-medium {
-      background: rgba(217, 119, 6, 0.92);
-      color: #FFFFFF;
-    }
-    .gps-bad {
-      background: rgba(220, 38, 38, 0.92);
-      color: #FFFFFF;
-    }
+    .gps-good { background: rgba(22, 163, 74, 0.92); color: #fff; }
+    .gps-medium { background: rgba(217, 119, 6, 0.92); color: #fff; }
+    .gps-bad { background: rgba(220, 38, 38, 0.92); color: #fff; }
 
-    /* Contrôles de zoom (+ / -) et bouton Recentrer */
-    .controls-container {
+    /* Boutons latéraux */
+    .side-controls {
       position: absolute;
-      right: 16px;
-      bottom: 86px;
+      right: 14px;
+      bottom: 84px;
       z-index: 120;
       display: flex;
       flex-direction: column;
       gap: 10px;
-      pointer-events: auto;
     }
     .btn-circle {
-      width: 48px;
-      height: 48px;
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
-      background: rgba(25, 32, 48, 0.92);
-      color: #FFFFFF;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+      background: rgba(15, 23, 42, 0.92);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.35);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
-      font-weight: 500;
+      font-size: 20px;
+      font-weight: bold;
       cursor: pointer;
       backdrop-filter: blur(8px);
-      transition: transform 0.15s, background-color 0.2s;
     }
-    .btn-circle:active {
-      transform: scale(0.92);
-      background: rgba(45, 55, 80, 0.95);
+    body.light-theme .btn-circle {
+      background: rgba(255,255,255,0.95);
+      color: #0f172a;
+      border: 1px solid rgba(0,0,0,0.1);
     }
-    .btn-recenter {
-      display: none;
-      background: #007AFF;
-      border-color: #3895ff;
-      color: white;
-    }
-    .btn-recenter svg {
-      width: 22px;
-      height: 22px;
-      fill: currentColor;
+    .btn-circle:active { transform: scale(0.92); }
+    #btnRecenter { display: none; background: #007aff; color: #fff; }
+
+    /* Switch Thème Jour/Nuit en haut à droite */
+    #themeToggle {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 120;
     }
 
-    /* Dialogue / notification d'erreur GPS */
-    #gps-modal {
+    /* Modal / Pop-up de confirmation du feu */
+    #traffic-modal {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(10, 15, 26, 0.88);
-      z-index: 2000;
+      bottom: 90px;
+      left: 14px;
+      right: 14px;
+      z-index: 150;
+      background: rgba(15, 23, 42, 0.96);
+      color: #fff;
+      padding: 16px;
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.15);
       display: none;
+      flex-direction: column;
+      gap: 12px;
+      backdrop-filter: blur(14px);
+    }
+    body.light-theme #traffic-modal {
+      background: rgba(255,255,255,0.98);
+      color: #0f172a;
+      border: 1px solid rgba(0,0,0,0.12);
+    }
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-title {
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-action {
+      flex: 1;
+      padding: 11px 12px;
+      border-radius: 12px;
+      border: none;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px;
-      backdrop-filter: blur(10px);
+      gap: 6px;
     }
-    .gps-modal-content {
-      background: #1e2638;
+    .btn-confirm { background: #16a34a; color: #fff; }
+    .btn-missing { background: #dc2626; color: #fff; }
+    .btn-close { background: rgba(255,255,255,0.1); color: #fff; flex: 0.3; }
+    body.light-theme .btn-close { background: rgba(0,0,0,0.06); color: #333; }
+
+    /* Toast notification */
+    #toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.85);
       color: #fff;
+      padding: 8px 16px;
       border-radius: 20px;
-      padding: 24px 20px;
-      max-width: 360px;
-      width: 100%;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-      border: 1px solid rgba(255,255,255,0.1);
-      text-align: center;
-    }
-    .gps-modal-content h3 {
-      font-size: 19px;
-      margin-bottom: 12px;
-      color: #ff6b6b;
-    }
-    .gps-modal-content p {
-      font-size: 14px;
-      line-height: 1.5;
-      color: #cfd8dc;
-      margin-bottom: 14px;
-      text-align: left;
-    }
-    .gps-modal-content .brave-note {
-      background: rgba(255, 115, 0, 0.15);
-      border-left: 3px solid #ff7300;
-      padding: 10px;
-      border-radius: 6px;
       font-size: 13px;
-      color: #ffb074;
-      margin-bottom: 18px;
-      text-align: left;
-    }
-    .gps-modal-content button {
-      background: #007AFF;
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 12px 24px;
-      font-size: 15px;
       font-weight: 600;
-      width: 100%;
-      cursor: pointer;
+      z-index: 200;
+      display: none;
+      backdrop-filter: blur(8px);
     }
   </style>
 </head>
 <body>
-
-  <!-- Conteneur Carte MapLibre -->
   <div id="map"></div>
 
-  <!-- Flèche Waze fixe au 2/3 bas de l'écran -->
-  <div id="nav-cursor-container">
-    <svg class="waze-arrow" id="navArrow" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Curseur Waze fixe au 2/3 bas -->
+  <div id="nav-cursor">
+    <svg class="waze-arrow" viewBox="0 0 60 60" fill="none">
       <path d="M30 4L54 52L30 42L6 52L30 4Z" fill="#00D2FF" stroke="#FFFFFF" stroke-width="3.5" stroke-linejoin="round"/>
       <path d="M30 11L48 47L30 38.5V11Z" fill="#0099FF"/>
     </svg>
   </div>
 
-  <!-- Badge Précision GPS -->
-  <div id="gps-badge" class="gps-bad">
-    <span>GPS: Recherche...</span>
-  </div>
+  <!-- Bouton bascule Thème Jour / Nuit manuel -->
+  <button class="btn-circle" id="themeToggle" title="Mode Sombre/Clair">🌓</button>
 
-  <!-- Boutons de contrôle -->
-  <div class="controls-container">
-    <button class="btn-circle btn-recenter" id="btnRecenter" title="Recentrer">
-      <svg viewBox="0 0 24 24"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0 0 13 3.06V1h-2v2.06A8.994 8.994 0 0 0 3.06 11H1v2h2.06A8.994 8.994 0 0 0 11 20.94V23h2v-2.06A8.994 8.994 0 0 0 20.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
-    </button>
+  <!-- Badge Précision GPS -->
+  <div id="gps-badge" class="gps-bad">GPS: Recherche...</div>
+
+  <!-- Contrôles latéraux -->
+  <div class="side-controls">
+    <button class="btn-circle" id="btnRecenter" title="Recentrer">🎯</button>
     <button class="btn-circle" id="btnZoomIn">+</button>
     <button class="btn-circle" id="btnZoomOut">−</button>
   </div>
 
-  <!-- Bannière Nom de Rue (Style Waze) -->
+  <!-- Bandeau Rue Waze -->
   <div id="street-banner">
-    <small>Rue actuelle (Ivry-sur-Seine)</small>
-    <span id="street-name">Localisation en cours...</span>
+    <div id="street-text">
+      <small>Position actuelle</small>
+      <span id="street-name">Localisation en cours...</span>
+    </div>
+    <button class="btn-circle" id="btnSignalFeu" style="width:38px;height:38px;font-size:16px;" title="Vérifier / Signaler un feu">🚦</button>
   </div>
 
-  <!-- Modal Erreur GPS -->
-  <div id="gps-modal">
-    <div class="gps-modal-content">
-      <h3>Position introuvable</h3>
-      <p id="gps-error-message">Active ta position dans les réglages du navigateur pour démarrer la navigation.</p>
-      <div class="brave-note">
-        <strong>Note pour Brave (Android) :</strong><br>
-        Autorise l'accès à la localisation et désactive les "Brave Shields" (icône lion dans la barre d'adresse) pour ce site afin d'autoriser la géolocalisation haute précision.
-      </div>
-      <button onclick="document.getElementById('gps-modal').style.display='none'; location.reload();">Réessayer</button>
+  <!-- Pop-up de confirmation de feu -->
+  <div id="traffic-modal">
+    <div class="modal-header">
+      <div class="modal-title">🚦 <span id="feu-desc">Feu tricolore à proximité</span></div>
+      <span id="feu-status" style="font-size:12px;opacity:0.8;"></span>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-action btn-confirm" id="btnConfirmFeu">✅ Bien présent</button>
+      <button class="btn-action btn-missing" id="btnMissingFeu">❌ Absent / Supprimé</button>
+      <button class="btn-action btn-close" id="btnCloseFeu">✕</button>
     </div>
   </div>
 
-  <!-- MapLibre GL JS -->
+  <div id="toast"></div>
+
   <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
-
   <script>
-    /* =====================================================================
-       1. CONFIGURATION & THÈME JOUR / NUIT (OPENFREEMAP - SANS CLÉ)
-       ===================================================================== */
-    const IVRY_CENTER = [2.3845, 48.8155]; // [lng, lat]
-    let isAutoFollow = true;
-    let currentBearing = 0;
-    let currentSpeed = 0;
-    let currentZoom = 17.5;
-    const PITCH_ANGLE = 55; // Inclinaison Waze en perspective
+    /* ================= THÈME MANUEL & INITIALISATION ================= */
+    let isNight = (new Date().getHours() >= 19 || new Date().getHours() < 7);
+    if (!isNight) document.body.classList.add('light-theme');
 
-    function isNightMode() {
-      const hour = new Date().getHours();
-      return (hour >= 19 || hour < 7);
-    }
-    const night = isNightMode();
-
-    if (!night) {
-      document.getElementById('street-banner').classList.add('day-mode');
-    }
-
-    // URL du style OpenFreeMap (100% gratuit, sans clé)
-    const BASE_STYLE_URL = night
-      ? 'https://tiles.openfreemap.org/styles/dark'
+    const getStyleUrl = (night) => night 
+      ? 'https://tiles.openfreemap.org/styles/dark' 
       : 'https://tiles.openfreemap.org/styles/liberty';
 
-    /* =====================================================================
-       2. INITIALISATION CARTE MAPLIBRE
-       ===================================================================== */
+    let isAutoFollow = true;
+    let currentBearing = 0;
+    let currentZoom = 17.5;
+    const PITCH_ANGLE = 55;
+
     const map = new maplibregl.Map({
       container: 'map',
-      style: BASE_STYLE_URL,
-      center: IVRY_CENTER,
+      style: getStyleUrl(isNight),
+      center: [2.3216, 48.7562], // Fresnes par défaut
       zoom: currentZoom,
       pitch: PITCH_ANGLE,
       bearing: currentBearing,
       attributionControl: false
     });
 
-    // Personnalisation des couleurs OpenFreeMap vers un style Waze (bleus/violets & routes épurées)
-    map.on('style.load', () => {
-      try {
-        const layers = map.getStyle().layers;
-        layers.forEach(layer => {
-          // Fond de carte et espaces naturels vers des teintes sombres/bleutées
-          if (layer.type === 'background') {
-            map.setPaintProperty(layer.id, 'background-color', night ? '#0F172A' : '#E8EEF5');
-          }
-          if (layer.id.includes('water')) {
-            map.setPaintProperty(layer.id, 'fill-color', night ? '#1E293B' : '#7DD3FC');
-          }
-          if (layer.id.includes('park') || layer.id.includes('green') || layer.id.includes('landuse')) {
-            map.setPaintProperty(layer.id, 'fill-color', night ? '#131D31' : '#E2E8F0');
-          }
-          // Stylisation des routes façon Waze : autoroutes et axes principaux en violet/indigo, axes secondaires épurés
-          if (layer.type === 'line' && (layer.id.includes('road') || layer.id.includes('highway') || layer.id.includes('transportation'))) {
-            if (layer.id.includes('motorway') || layer.id.includes('primary') || layer.id.includes('trunk')) {
-              map.setPaintProperty(layer.id, 'line-color', night ? '#818CF8' : '#6366F1');
-            } else {
-              map.setPaintProperty(layer.id, 'line-color', night ? '#334155' : '#CBD5E1');
-            }
-          }
-        });
-      } catch (err) {
-        console.warn('Personnalisation Waze appliquée partiellement :', err);
-      }
+    // Bascule Jour / Nuit manuelle
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      isNight = !isNight;
+      document.body.classList.toggle('light-theme', !isNight);
+      map.setStyle(getStyleUrl(isNight));
     });
 
-    // GeoJSON dynamique pour la trace de parcours
-    const trailGeoJSON = {
-      type: 'Feature',
-      geometry: {
-        type: 'LineString',
-        coordinates: []
-      }
-    };
+    /* ================= COUCHES : TRACE, INCERTITUDE & FEUX ================= */
+    const trailGeoJSON = { type: 'Feature', geometry: { type: 'LineString', coordinates: [] } };
+    const accuracyGeoJSON = { type: 'Feature', geometry: { type: 'Polygon', coordinates: [[]] } };
+    let feuxFeatures = [];
+    let selectedFeuId = null;
 
-    // GeoJSON dynamique pour le cercle d'incertitude
-    const accuracyGeoJSON = {
-      type: 'Feature',
-      geometry: {
-        type: 'Polygon',
-        coordinates: [[]]
-      }
-    };
+    // Stockage local des confirmations pour persister tes vérifications
+    const feuxReviews = JSON.parse(localStorage.getItem('feux_reviews') || '{}');
 
-    // Générateur de cercle polygonal en coordonnées géodésiques
-    function createGeoCircle(centerLng, centerLat, radiusMeters, points = 36) {
+    function createGeoCircle(centerLng, centerLat, radiusMeters, points = 32) {
       const coords = [];
       const km = radiusMeters / 1000;
-      const distanceX = km / (111.320 * Math.cos(centerLat * Math.PI / 180));
-      const distanceY = km / 110.574;
-
+      const dx = km / (111.320 * Math.cos(centerLat * Math.PI / 180));
+      const dy = km / 110.574;
       for (let i = 0; i <= points; i++) {
         const theta = (i / points) * (2 * Math.PI);
-        const x = distanceX * Math.cos(theta);
-        const y = distanceY * Math.sin(theta);
-        coords.push([centerLng + x, centerLat + y]);
+        coords.push([centerLng + dx * Math.cos(theta), centerLat + dy * Math.sin(theta)]);
       }
       return coords;
     }
 
-    /* =====================================================================
-       3. CHARGEMENT COUCHES (TRACE, CERCLE, FEUX ROUGES)
-       ===================================================================== */
-    map.on('load', () => {
-      // Image personnalisée pour les feux tricolores
+    function initLayers() {
+      // Icône SVG pour le feu
       const trafficSvg = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="36" viewBox="0 0 24 36">
-          <rect x="2" y="2" width="20" height="32" rx="6" fill="#1E293B" stroke="#F8FAFC" stroke-width="2"/>
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="42" viewBox="0 0 24 36">
+          <rect x="2" y="2" width="20" height="32" rx="6" fill="#0F172A" stroke="#FFFFFF" stroke-width="2.5"/>
           <circle cx="12" cy="8" r="3.5" fill="#EF4444"/>
           <circle cx="12" cy="18" r="3.5" fill="#F59E0B"/>
           <circle cx="12" cy="28" r="3.5" fill="#10B981"/>
         </svg>
       `;
       const img = new Image();
-      img.onload = () => {
-        if (!map.hasImage('traffic-light-icon')) {
-          map.addImage('traffic-light-icon', img);
-        }
-      };
+      img.onload = () => { if (!map.hasImage('traffic-icon')) map.addImage('traffic-icon', img); };
       img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(trafficSvg);
 
-      // 1. Source & Couche de trace (bleu clair Waze)
-      map.addSource('trail-source', {
-        type: 'geojson',
-        data: trailGeoJSON
-      });
-      map.addLayer({
-        id: 'trail-layer',
-        type: 'line',
-        source: 'trail-source',
-        layout: {
-          'line-join': 'round',
-          'line-cap': 'round'
-        },
-        paint: {
-          'line-color': '#38bdf8',
-          'line-width': 6,
-          'line-opacity': 0.85
-        }
-      });
+      // Trace
+      if (!map.getSource('trail-source')) {
+        map.addSource('trail-source', { type: 'geojson', data: trailGeoJSON });
+        map.addLayer({
+          id: 'trail-layer',
+          type: 'line',
+          source: 'trail-source',
+          layout: { 'line-join': 'round', 'line-cap': 'round' },
+          paint: { 'line-color': '#00d2ff', 'line-width': 6, 'line-opacity': 0.85 }
+        });
+      }
 
-      // 2. Source & Couche cercle d'incertitude
-      map.addSource('accuracy-source', {
-        type: 'geojson',
-        data: accuracyGeoJSON
-      });
-      map.addLayer({
-        id: 'accuracy-fill',
-        type: 'fill',
-        source: 'accuracy-source',
-        paint: {
-          'fill-color': '#007AFF',
-          'fill-opacity': 0.15
-        }
-      });
-      map.addLayer({
-        id: 'accuracy-line',
-        type: 'line',
-        source: 'accuracy-source',
-        paint: {
-          'line-color': '#007AFF',
-          'line-width': 1.5,
-          'line-opacity': 0.5
-        }
-      });
+      // Cercle d'incertitude
+      if (!map.getSource('accuracy-source')) {
+        map.addSource('accuracy-source', { type: 'geojson', data: accuracyGeoJSON });
+        map.addLayer({
+          id: 'accuracy-fill',
+          type: 'fill',
+          source: 'accuracy-source',
+          paint: { 'fill-color': '#007aff', 'fill-opacity': 0.15 }
+        });
+      }
 
-      // 3. Source & Couche feux rouges Ivry (feux.geojson)
+      // Feux rouges 94 + P13
       fetch('feux.geojson')
-        .then(res => res.json())
+        .then(r => r.json())
         .then(data => {
-          map.addSource('traffic-lights', {
-            type: 'geojson',
-            data: data
+          feuxFeatures = data.features;
+          // Application des statuts vérifiés
+          data.features.forEach((f, idx) => {
+            const fid = f.id || idx;
+            f.properties._fid = fid;
+            f.properties.reviewed = feuxReviews[fid] || 'none';
           });
-          map.addLayer({
-            id: 'traffic-lights-layer',
-            type: 'symbol',
-            source: 'traffic-lights',
-            minzoom: 10,
-            maxzoom: 24,
-            layout: {
-              'icon-image': 'traffic-light-icon',
-              'icon-size': 0.85,
-              'icon-allow-overlap': true,
-              'icon-ignore-placement': true
-            }
-          });
-        })
-        .catch(e => console.warn('Erreur chargement feux.geojson:', e));
-    });
 
-    /* =====================================================================
-       4. ANIMATION FLUIDE & SUIVI WAZE (FLÈCHE FIXE AU 2/3 BAS)
-       ===================================================================== */
-    let lastLngLat = null;
-    let targetLngLat = null;
-    let animStartTime = 0;
+          if (map.getSource('traffic-lights')) {
+            map.getSource('traffic-lights').setData(data);
+          } else {
+            map.addSource('traffic-lights', { type: 'geojson', data: data });
+            map.addLayer({
+              id: 'traffic-lights-layer',
+              type: 'symbol',
+              source: 'traffic-lights',
+              minzoom: 12,
+              layout: {
+                'icon-image': 'traffic-icon',
+                'icon-size': 0.85,
+                'icon-allow-overlap': true,
+                'icon-ignore-placement': true
+              }
+            });
+          }
+        })
+        .catch(e => console.warn('Erreur chargement feux:', e));
+    }
+
+    map.on('load', initLayers);
+    map.on('style.load', initLayers);
+
+    /* ================= SUIVI GPS & INTERPOLATION ================= */
+    let lastLngLat = null, targetLngLat = null, animStartTime = 0;
     const ANIM_DURATION = 1000;
 
     function animateCamera(timestamp) {
       if (lastLngLat && targetLngLat && isAutoFollow) {
-        const progress = Math.min((timestamp - animStartTime) / ANIM_DURATION, 1.0);
-        const ease = 1 - Math.pow(1 - progress, 3);
-
+        const p = Math.min((timestamp - animStartTime) / ANIM_DURATION, 1.0);
+        const ease = 1 - Math.pow(1 - p, 3);
         const curLng = lastLngLat[0] + (targetLngLat[0] - lastLngLat[0]) * ease;
         const curLat = lastLngLat[1] + (targetLngLat[1] - lastLngLat[1]) * ease;
-        const currentCoord = [curLng, curLat];
-
-        // Décalage vertical pour placer la position à 68% de l'écran (bas)
-        const containerH = map.getContainer().clientHeight;
-        const offsetPixels = containerH * (0.68 - 0.50);
+        const offsetPixels = map.getContainer().clientHeight * (0.68 - 0.50);
 
         map.jumpTo({
-          center: currentCoord,
+          center: [curLng, curLat],
           bearing: currentBearing,
           pitch: PITCH_ANGLE,
           zoom: currentZoom,
@@ -513,255 +404,143 @@
     }
     requestAnimationFrame(animateCamera);
 
-    /* =====================================================================
-       5. CALCUL DU CAP (BEARING)
-       ===================================================================== */
-    function calculateBearing(startLng, startLat, destLng, destLat) {
-      const y = Math.sin((destLng - startLng) * Math.PI / 180) * Math.cos(destLat * Math.PI / 180);
-      const x = Math.cos(startLat * Math.PI / 180) * Math.sin(destLat * Math.PI / 180) -
-                Math.sin(startLat * Math.PI / 180) * Math.cos(destLat * Math.PI / 180) * Math.cos((destLng - startLng) * Math.PI / 180);
-      let brng = Math.atan2(y, x) * 180 / Math.PI;
-      return (brng + 360) % 360;
+    function calcBearing(sLng, sLat, dLng, dLat) {
+      const y = Math.sin((dLng - sLng) * Math.PI / 180) * Math.cos(dLat * Math.PI / 180);
+      const x = Math.cos(sLat * Math.PI / 180) * Math.sin(dLat * Math.PI / 180) -
+                Math.sin(sLat * Math.PI / 180) * Math.cos(dLat * Math.PI / 180) * Math.cos((dLng - sLng) * Math.PI / 180);
+      return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
     }
 
-    /* =====================================================================
-       6. DÉTECTION DU NOM DE LA RUE VIA queryRenderedFeatures
-       ===================================================================== */
-    function updateStreetFromMap(point) {
-      const features = map.queryRenderedFeatures(point, {
-        layers: map.getStyle().layers
-          .filter(l => l.type === 'line' || l.type === 'symbol')
-          .map(l => l.id)
+    // Nom de rue
+    function updateStreetFromMap(pt) {
+      const feats = map.queryRenderedFeatures(pt, {
+        layers: map.getStyle().layers.filter(l => l.type === 'line' || l.type === 'symbol').map(l => l.id)
       });
-
-      for (const f of features) {
-        const name = f.properties?.name || f.properties?.name_fr || f.properties?.name_en;
-        if (name && typeof name === 'string' && name.trim().length > 0) {
-          document.getElementById('street-name').textContent = name;
+      for (const f of feats) {
+        const n = f.properties?.name || f.properties?.name_fr;
+        if (n && n.trim().length > 0) {
+          document.getElementById('street-name').textContent = n;
           return;
         }
       }
     }
 
-    /* =====================================================================
-       7. GÉOLOCALISATION HAUTE PRÉCISION (watchPosition)
-       ===================================================================== */
-    const gpsBadge = document.getElementById('gps-badge');
-    let previousRawPos = null;
-
-    if (!navigator.geolocation) {
-      showGpsError("La géolocalisation n'est pas supportée par ton navigateur.");
-    } else {
-      const geoOptions = {
-        enableHighAccuracy: true,
-        timeout: 15000,
-        maximumAge: 0
-      };
-
+    let prevPos = null;
+    if (navigator.geolocation) {
       navigator.geolocation.watchPosition(
-        (pos) => {
-          const lat = pos.coords.latitude;
-          const lng = pos.coords.longitude;
-          const accuracy = pos.coords.accuracy || 0;
-          const speed = pos.coords.speed !== null && !isNaN(pos.coords.speed) ? pos.coords.speed : 0;
-          let heading = pos.coords.heading;
+        pos => {
+          const { latitude: lat, longitude: lng, accuracy, speed, heading } = pos.coords;
+          const badge = document.getElementById('gps-badge');
+          badge.innerHTML = `GPS: &plusmn;${Math.round(accuracy)} m`;
+          badge.className = accuracy < 15 ? 'gps-good' : (accuracy <= 30 ? 'gps-medium' : 'gps-bad');
 
-          // Mise à jour badge précision
-          updateGpsBadge(accuracy);
-
-          // Cercle d'incertitude
           accuracyGeoJSON.geometry.coordinates = [createGeoCircle(lng, lat, accuracy)];
-          if (map.getSource('accuracy-source')) {
-            map.getSource('accuracy-source').setData(accuracyGeoJSON);
-          }
+          if (map.getSource('accuracy-source')) map.getSource('accuracy-source').setData(accuracyGeoJSON);
 
-          // Gestion cap & vitesse
-          currentSpeed = speed;
-          if (speed > 1.0) {
-            if (heading !== null && !isNaN(heading)) {
-              currentBearing = heading;
-            } else if (previousRawPos) {
-              currentBearing = calculateBearing(previousRawPos[0], previousRawPos[1], lng, lat);
-            }
-            // Zoom adaptatif
-            const speedZoom = Math.max(15, Math.min(18.5, 18.5 - (speed * 0.12)));
-            currentZoom = currentZoom * 0.8 + speedZoom * 0.2;
+          const curSpeed = speed || 0;
+          if (curSpeed > 1.0) {
+            currentBearing = (heading !== null && !isNaN(heading)) ? heading : (prevPos ? calcBearing(prevPos[0], prevPos[1], lng, lat) : currentBearing);
+            currentZoom = currentZoom * 0.8 + Math.max(15, Math.min(18.5, 18.5 - (curSpeed * 0.12))) * 0.2;
           } else {
-            // Arrêt : carte figée, cap conservé !
             currentZoom = currentZoom * 0.8 + 18.0 * 0.2;
           }
 
-          // Trace de parcours
           const coord = [lng, lat];
           trailGeoJSON.geometry.coordinates.push(coord);
-          if (map.getSource('trail-source')) {
-            map.getSource('trail-source').setData(trailGeoJSON);
-          }
+          if (map.getSource('trail-source')) map.getSource('trail-source').setData(trailGeoJSON);
 
-          // Interpolation fluide
           if (!lastLngLat) {
-            lastLngLat = coord;
-            targetLngLat = coord;
+            lastLngLat = coord; targetLngLat = coord;
             map.jumpTo({ center: coord, zoom: currentZoom, pitch: PITCH_ANGLE, bearing: currentBearing });
           } else {
-            lastLngLat = targetLngLat;
-            targetLngLat = coord;
+            lastLngLat = targetLngLat; targetLngLat = coord;
             animStartTime = performance.now();
           }
+          prevPos = coord;
 
-          previousRawPos = coord;
-
-          // Mise à jour nom de rue au niveau de la position du curseur (2/3 bas)
-          const screenCenter = [window.innerWidth * 0.5, window.innerHeight * 0.68];
-          updateStreetFromMap(screenCenter);
+          updateStreetFromMap([window.innerWidth * 0.5, window.innerHeight * 0.68]);
         },
-        (err) => {
-          console.error('Erreur GPS:', err);
-          let msg = "Active ta position dans les réglages du navigateur pour afficher la carte.";
-          if (err.code === 1) {
-            msg = "Accès à la position refusé. Clique sur les paramètres du cadenas/site pour autoriser la position.";
-          } else if (err.code === 2) {
-            msg = "Position indisponible. Vérifie que le GPS de ton smartphone est allumé.";
-          }
-          showGpsError(msg);
-        },
-        geoOptions
+        err => console.error(err),
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
       );
     }
 
-    function updateGpsBadge(acc) {
-      const rounded = Math.round(acc);
-      gpsBadge.innerHTML = `GPS: &plusmn;${rounded} m`;
-      gpsBadge.classList.remove('gps-good', 'gps-medium', 'gps-bad');
-      if (acc < 15) {
-        gpsBadge.classList.add('gps-good');
-      } else if (acc <= 30) {
-        gpsBadge.classList.add('gps-medium');
-      } else {
-        gpsBadge.classList.add('gps-bad');
-      }
+    /* ================= VÉRIFICATION / SIGNALEMENT DES FEUX ================= */
+    const modal = document.getElementById('traffic-modal');
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg; t.style.display = 'block';
+      setTimeout(() => t.style.display = 'none', 3000);
     }
 
-    function showGpsError(msg) {
-      document.getElementById('gps-error-message').textContent = msg;
-      document.getElementById('gps-modal').style.display = 'flex';
-    }
-
-    /* =====================================================================
-       8. APPUI LONG (2 SECONDES) SUR UNE RUE (queryRenderedFeatures)
-       ===================================================================== */
-    let touchTimer = null;
-    let touchScreenPoint = null;
-
-    map.on('touchstart', (e) => {
-      touchScreenPoint = e.point;
-      touchTimer = setTimeout(() => {
-        if (navigator.vibrate) navigator.vibrate(50);
-        // Interrogation des entités vectorielles sous le doigt
-        const features = map.queryRenderedFeatures(touchScreenPoint);
-        let foundName = null;
-        for (const f of features) {
-          const name = f.properties?.name || f.properties?.name_fr || f.properties?.name_en;
-          if (name && typeof name === 'string' && name.trim().length > 0) {
-            foundName = name;
-            break;
-          }
-        }
-        if (foundName) {
-          document.getElementById('street-name').textContent = `Rue sélectionnée : ${foundName}`;
-        } else {
-          document.getElementById('street-name').textContent = "Voie sans nom répertorié";
-        }
-      }, 2000);
+    // Clic direct sur un feu pour vérifier
+    map.on('click', 'traffic-lights-layer', (e) => {
+      const f = e.features[0];
+      if (!f) return;
+      selectedFeuId = f.properties._fid;
+      document.getElementById('feu-desc').textContent = "Feu sélectionné sur la carte";
+      document.getElementById('feu-status').textContent = feuxReviews[selectedFeuId] === 'confirmed' ? '(Déjà confirmé ✅)' : '';
+      modal.style.display = 'flex';
     });
 
-    map.on('touchend', () => {
-      if (touchTimer) {
-        clearTimeout(touchTimer);
-        touchTimer = null;
+    // Bouton 🚦 pour vérifier le feu le plus proche de ma position
+    document.getElementById('btnSignalFeu').addEventListener('click', () => {
+      if (!prevPos || feuxFeatures.length === 0) {
+        showToast("Position ou feux en cours de chargement...");
+        return;
+      }
+      // Recherche du feu le plus proche (< 150m)
+      let minDist = Infinity, nearest = null;
+      feuxFeatures.forEach((f, idx) => {
+        const c = f.geometry.coordinates;
+        const d = Math.hypot(c[0] - prevPos[0], c[1] - prevPos[1]);
+        if (d < minDist) { minDist = d; nearest = f.properties._fid || idx; }
+      });
+      selectedFeuId = nearest;
+      document.getElementById('feu-desc').textContent = "Feu le plus proche de toi";
+      document.getElementById('feu-status').textContent = feuxReviews[selectedFeuId] === 'confirmed' ? '(Déjà confirmé ✅)' : '';
+      modal.style.display = 'flex';
+    });
+
+    document.getElementById('btnConfirmFeu').addEventListener('click', () => {
+      if (selectedFeuId !== null) {
+        feuxReviews[selectedFeuId] = 'confirmed';
+        localStorage.setItem('feux_reviews', JSON.stringify(feuxReviews));
+        showToast("Feu confirmé bien présent ! ✅");
+        modal.style.display = 'none';
       }
     });
 
-    map.on('touchmove', () => {
-      if (touchTimer) {
-        clearTimeout(touchTimer);
-        touchTimer = null;
+    document.getElementById('btnMissingFeu').addEventListener('click', () => {
+      if (selectedFeuId !== null) {
+        feuxReviews[selectedFeuId] = 'missing';
+        localStorage.setItem('feux_reviews', JSON.stringify(feuxReviews));
+        showToast("Feu signalé absent / supprimé ! ❌");
+        modal.style.display = 'none';
       }
     });
 
-    /* =====================================================================
-       9. RECENTRAGE & CONTRÔLES (+ / -)
-       ===================================================================== */
+    document.getElementById('btnCloseFeu').addEventListener('click', () => modal.style.display = 'none');
+
+    /* ================= CONTRÔLES CARTE & WAKE LOCK ================= */
     const btnRecenter = document.getElementById('btnRecenter');
-    const btnZoomIn = document.getElementById('btnZoomIn');
-    const btnZoomOut = document.getElementById('btnZoomOut');
-
-    map.on('dragstart', () => {
-      isAutoFollow = false;
-      btnRecenter.style.display = 'flex';
-    });
-
+    map.on('dragstart', () => { isAutoFollow = false; btnRecenter.style.display = 'flex'; });
     btnRecenter.addEventListener('click', () => {
-      isAutoFollow = true;
-      btnRecenter.style.display = 'none';
+      isAutoFollow = true; btnRecenter.style.display = 'none';
       if (targetLngLat) {
-        const containerH = map.getContainer().clientHeight;
-        const offsetPixels = containerH * (0.68 - 0.50);
-        map.flyTo({
-          center: targetLngLat,
-          bearing: currentBearing,
-          pitch: PITCH_ANGLE,
-          zoom: currentZoom,
-          offset: [0, -offsetPixels],
-          duration: 800
-        });
+        map.flyTo({ center: targetLngLat, bearing: currentBearing, pitch: PITCH_ANGLE, zoom: currentZoom, duration: 600 });
       }
     });
 
-    btnZoomIn.addEventListener('click', () => {
-      currentZoom = Math.min(currentZoom + 1, 20);
-      map.setZoom(currentZoom);
-    });
+    document.getElementById('btnZoomIn').addEventListener('click', () => { currentZoom = Math.min(currentZoom + 1, 20); map.setZoom(currentZoom); });
+    document.getElementById('btnZoomOut').addEventListener('click', () => { currentZoom = Math.max(currentZoom - 1, 13); map.setZoom(currentZoom); });
 
-    btnZoomOut.addEventListener('click', () => {
-      currentZoom = Math.max(currentZoom - 1, 13);
-      map.setZoom(currentZoom);
-    });
-
-    /* =====================================================================
-       10. WAKE LOCK API (ÉCRAN TOUJOURS ALLUMÉ)
-       ===================================================================== */
+    // Wake Lock
     let wakeLock = null;
-
-    async function requestWakeLock() {
-      try {
-        if ('wakeLock' in navigator) {
-          wakeLock = await navigator.wakeLock.request('screen');
-          wakeLock.addEventListener('release', () => {
-            wakeLock = null;
-          });
-        }
-      } catch (err) {
-        console.warn('Wake Lock non activé :', err);
-      }
-    }
-
-    window.addEventListener('touchstart', () => {
-      if (!wakeLock) requestWakeLock();
-    }, { once: true });
-    window.addEventListener('click', () => {
-      if (!wakeLock) requestWakeLock();
-    }, { once: true });
-
-    document.addEventListener('visibilitychange', async () => {
-      if (wakeLock === null && document.visibilityState === 'visible') {
-        await requestWakeLock();
-      }
-    });
-
-    window.addEventListener('resize', () => {
-      map.resize();
-    });
+    async function getLock() { try { if ('wakeLock' in navigator) wakeLock = await navigator.wakeLock.request('screen'); } catch(e){} }
+    window.addEventListener('click', () => { if (!wakeLock) getLock(); }, { once: true });
+    window.addEventListener('touchstart', () => { if (!wakeLock) getLock(); }, { once: true });
+    document.addEventListener('visibilitychange', () => { if (wakeLock === null && document.visibilityState === 'visible') getLock(); });
   </script>
 </body>
 </html>
