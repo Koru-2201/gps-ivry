@@ -8,62 +8,74 @@
   <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
   <style>
     * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none; }
-    html, body { width:100%; height:100%; overflow:hidden; font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background:#1b212c; }
+    html, body { width:100%; height:100%; overflow:hidden; font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background:#0e131f; }
     #map { width:100%; height:100%; position:absolute; top:0; left:0; }
 
-    /* HUD Waze */
+    /* Top HUD */
     .top-bar {
       position:absolute; top:12px; left:12px; right:12px;
       display:flex; justify-content:space-between; align-items:center;
       pointer-events:none; z-index:10;
     }
     .badge {
-      background:rgba(23, 28, 38, 0.88); backdrop-filter:blur(8px);
-      padding:6px 12px; border-radius:20px; font-size:12px; font-weight:700;
-      color:#fff; box-shadow:0 3px 10px rgba(0,0,0,0.35); pointer-events:auto;
-      display:flex; align-items:center; gap:6px;
+      background:rgba(20, 26, 38, 0.9); backdrop-filter:blur(8px);
+      padding:7px 14px; border-radius:22px; font-size:12px; font-weight:700;
+      color:#fff; box-shadow:0 3px 10px rgba(0,0,0,0.4); pointer-events:auto;
+      display:flex; align-items:center; gap:6px; border:1px solid rgba(255,255,255,0.08);
     }
     .dot { width:8px; height:8px; border-radius:50%; background:#2ecc71; }
     .dot.orange { background:#f39c12; }
     .dot.red { background:#e74c3c; }
 
-    .bottom-bar {
-      position:absolute; bottom:16px; left:12px; right:12px;
-      display:flex; flex-direction:column; gap:8px; pointer-events:none; z-index:10;
+    /* Speedometer Waze */
+    .speedometer {
+      position:absolute; bottom:85px; left:14px; z-index:10;
+      width:60px; height:60px; border-radius:50%;
+      background:#fff; border:4px solid #3399ff;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      box-shadow:0 4px 15px rgba(0,0,0,0.35); pointer-events:none;
     }
-    .street-card {
-      background:rgba(25, 32, 44, 0.92); backdrop-filter:blur(10px);
-      border-radius:18px; padding:12px 16px; color:#fff;
-      box-shadow:0 4px 15px rgba(0,0,0,0.4); text-align:center;
-      font-size:15px; font-weight:700; pointer-events:auto; border:1px solid rgba(255,255,255,0.08);
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    }
+    .speed-val { font-size:22px; font-weight:900; color:#1e293b; line-height:1; }
+    .speed-unit { font-size:9px; font-weight:700; color:#64748b; }
 
+    /* Controls */
     .controls {
-      position:absolute; right:14px; bottom:90px;
+      position:absolute; right:14px; bottom:85px;
       display:flex; flex-direction:column; gap:10px; z-index:10;
     }
     .btn-circle {
-      width:46px; height:46px; border-radius:50%;
-      background:rgba(25, 32, 44, 0.92); backdrop-filter:blur(10px);
+      width:48px; height:48px; border-radius:50%;
+      background:rgba(20, 26, 38, 0.92); backdrop-filter:blur(10px);
       border:1px solid rgba(255,255,255,0.12); color:#fff;
       display:flex; align-items:center; justify-content:center;
       font-size:20px; font-weight:bold; box-shadow:0 4px 12px rgba(0,0,0,0.4);
       cursor:pointer;
     }
     .btn-circle:active { transform:scale(0.92); }
+    .btn-add-feu { background:#ff334b; border-color:#ff667a; font-size:16px; }
 
-    /* Flèche Waze personnalisée */
-    .waze-puck {
-      width:40px; height:40px; position:relative; pointer-events:none;
+    /* Bottom Street Card */
+    .bottom-bar {
+      position:absolute; bottom:16px; left:12px; right:12px;
+      pointer-events:none; z-index:10;
     }
+    .street-card {
+      background:rgba(20, 26, 38, 0.94); backdrop-filter:blur(10px);
+      border-radius:18px; padding:13px 16px; color:#fff;
+      box-shadow:0 4px 15px rgba(0,0,0,0.4); text-align:center;
+      font-size:15px; font-weight:700; pointer-events:auto; border:1px solid rgba(255,255,255,0.08);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+
+    /* Waze puck */
+    .waze-puck { width:42px; height:42px; position:relative; pointer-events:none; }
     .puck-halo {
-      position:absolute; top:5px; left:5px; width:30px; height:30px;
-      border-radius:50%; background:rgba(51, 153, 255, 0.35);
+      position:absolute; top:6px; left:6px; width:30px; height:30px;
+      border-radius:50%; background:rgba(51, 153, 255, 0.4);
       animation:pulse 2s infinite ease-out;
     }
     .puck-arrow {
-      position:absolute; top:0; left:0; width:40px; height:40px;
+      position:absolute; top:0; left:0; width:42px; height:42px;
       display:flex; align-items:center; justify-content:center;
       filter:drop-shadow(0 3px 6px rgba(0,0,0,0.45));
     }
@@ -72,114 +84,107 @@
       100% { transform:scale(2.2); opacity:0; }
     }
 
-    /* Modal Permissions / Alerte */
-    #status-overlay {
-      position:fixed; top:0; left:0; width:100%; height:100%;
-      background:rgba(15, 20, 30, 0.94); z-index:999;
-      display:flex; flex-direction:column; align-items:center; justify-content:center;
-      color:#fff; padding:24px; text-align:center;
+    /* Toast notification */
+    #toast {
+      position:absolute; top:60px; left:50%; transform:translateX(-50%);
+      background:rgba(16, 185, 129, 0.95); color:#fff; padding:8px 16px;
+      border-radius:20px; font-size:13px; font-weight:700; z-index:99;
+      display:none; box-shadow:0 4px 12px rgba(0,0,0,0.3);
     }
-    #status-overlay h2 { margin-bottom:12px; font-size:20px; color:#3399ff; }
-    #status-overlay p { font-size:14px; line-height:1.5; color:#cbd5e1; max-width:320px; }
   </style>
 </head>
 <body>
-  <div id="status-overlay">
-    <h2>🚗 Initialisation GPS Waze</h2>
-    <p>En attente du signal GPS Ivry-sur-Seine.<br><br><b>Touchez l'écran</b> pour activer l'anti-veille.</p>
-  </div>
-
+  <div id="toast"></div>
   <div id="map"></div>
 
   <div class="top-bar">
     <div class="badge" id="badge-gps">
       <span class="dot" id="gps-dot"></span>
-      <span id="gps-text">GPS : Recherche...</span>
+      <span id="gps-text">GPS: Recherche...</span>
     </div>
-    <div class="badge" id="badge-speed" style="display:none;">0 km/h</div>
+    <div class="badge" id="badge-feux">🚦 <span id="feux-count">3469</span> feux</div>
+  </div>
+
+  <div class="speedometer">
+    <span class="speed-val" id="speed-val">0</span>
+    <span class="speed-unit">km/h</span>
   </div>
 
   <div class="controls">
+    <button class="btn-circle btn-add-feu" id="btn-add-feu" title="Ajouter un feu ici">🚦+</button>
     <button class="btn-circle" id="btn-recenter" title="Recentrer">🎯</button>
     <button class="btn-circle" id="btn-zoom-in">+</button>
     <button class="btn-circle" id="btn-zoom-out">−</button>
   </div>
 
   <div class="bottom-bar">
-    <div class="street-card" id="street-name">Val-de-Marne & Paris 13</div>
+    <div class="street-card" id="street-name">Recherche de voie...</div>
   </div>
 
   <script>
-    const IVRY_CENTER = [2.3833, 48.8133];
+    const PARIS13_CENTER = [2.3600, 48.8250];
     let isFollowing = true;
-    let wakeLock = null;
     let currentCoords = null;
     let currentHeading = 0;
-    let breadcrumbCoords = [];
+    let breadcrumb = [];
+    let customFeux = JSON.parse(localStorage.getItem('custom_feux') || '[]');
+    let lastReverseGeocode = 0;
 
-    // Demande de Wake Lock (écran allumé sur Samsung A15)
-    async function requestWakeLock() {
-      try {
-        if ('wakeLock' in navigator) {
-          wakeLock = await navigator.wakeLock.request('screen');
-        }
-      } catch (err) {}
+    // Wake Lock
+    async function initWakeLock() {
+      try { if ('wakeLock' in navigator) await navigator.wakeLock.request('screen'); } catch(e){}
     }
-    document.addEventListener('click', requestWakeLock, { once: true });
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') requestWakeLock();
-    });
+    document.addEventListener('click', initWakeLock, { once: true });
 
-    // Style Waze sombre épuré
-    const styleDarkWaze = {
-      version: 8,
-      sources: {
-        carto: {
-          type: 'raster',
-          tiles: [
-            'https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png',
-            'https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png'
-          ],
-          tileSize: 256
-        }
-      },
-      layers: [{
-        id: 'carto-tiles',
-        type: 'raster',
-        source: 'carto',
-        minzoom: 0,
-        maxzoom: 19
-      }]
-    };
+    // Toast
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 2500);
+    }
 
+    // MapLibre init
     const map = new maplibre_gl.Map({
       container: 'map',
-      style: styleDarkWaze,
-      center: IVRY_CENTER,
+      style: {
+        version: 8,
+        sources: {
+          carto: {
+            type: 'raster',
+            tiles: [
+              'https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png',
+              'https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png'
+            ],
+            tileSize: 256
+          }
+        },
+        layers: [{ id: 'carto-tiles', type: 'raster', source: 'carto', minzoom: 0, maxzoom: 19 }]
+      },
+      center: PARIS13_CENTER,
       zoom: 16.5,
       pitch: 55,
       bearing: 0,
       attributionControl: false
     });
 
-    // Élément visuel de la flèche Waze
+    // Curseur Waze
     const puckEl = document.createElement('div');
     puckEl.className = 'waze-puck';
     puckEl.innerHTML = `
       <div class="puck-halo"></div>
       <div class="puck-arrow">
-        <svg width="34" height="34" viewBox="0 0 40 40">
+        <svg width="36" height="36" viewBox="0 0 40 40">
           <path d="M20 2 L36 34 L20 27 L4 34 Z" fill="#258cfb" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>
         </svg>
       </div>
     `;
-
     const puckMarker = new maplibre_gl.Marker({ element: puckEl, rotationAlignment: 'map' })
-      .setLngLat(IVRY_CENTER)
+      .setLngLat(PARIS13_CENTER)
       .addTo(map);
 
-    map.on('load', () => {
-      // Trace de parcours
+    map.on('load', async () => {
+      // Trace parcours
       map.addSource('route-trace', {
         type: 'geojson',
         data: { type: 'Feature', geometry: { type: 'LineString', coordinates: [] } }
@@ -188,109 +193,113 @@
         id: 'route-trace-line',
         type: 'line',
         source: 'route-trace',
-        paint: {
-          'line-color': '#3399ff',
-          'line-width': 6,
-          'line-opacity': 0.7,
-          'line-cap': 'round'
-        }
+        paint: { 'line-color': '#3399ff', 'line-width': 6, 'line-opacity': 0.75, 'line-cap': 'round' }
       });
 
-      // Feux rouges Ivry
-      map.addSource('feux-source', { type: 'geojson', data: './feux.geojson' });
+      // Feux officiels + custom
+      const res = await fetch('./feux.geojson');
+      const data = await res.json();
+      data.features.push(...customFeux);
+
+      map.addSource('feux-source', { type: 'geojson', data: data });
       map.addLayer({
         id: 'feux-glow',
         type: 'circle',
         source: 'feux-source',
-        paint: {
-          'circle-radius': 7,
-          'circle-color': '#ff334b',
-          'circle-opacity': 0.35,
-          'circle-blur': 0.8
-        }
+        paint: { 'circle-radius': 8, 'circle-color': '#ff334b', 'circle-opacity': 0.35, 'circle-blur': 0.8 }
       });
       map.addLayer({
         id: 'feux-dots',
         type: 'circle',
         source: 'feux-source',
-        paint: {
-          'circle-radius': 4.5,
-          'circle-color': '#ff2a40',
-          'circle-stroke-width': 1.5,
-          'circle-stroke-color': '#ffffff'
-        }
+        paint: { 'circle-radius': 4.5, 'circle-color': '#ff2a40', 'circle-stroke-width': 1.5, 'circle-stroke-color': '#ffffff' }
       });
+
+      document.getElementById('feux-count').textContent = data.features.length;
     });
 
-    // Débrayage du suivi si interaction utilisateur
-    map.on('dragstart', () => { isFollowing = false; });
+    // Bouton Ajouter Feu (sur position actuelle)
+    document.getElementById('btn-add-feu').onclick = () => {
+      if (!currentCoords) return showToast('Position GPS introuvable');
+      const newFeu = {
+        type: 'Feature',
+        geometry: { type: 'Point', coordinates: [currentCoords[0], currentCoords[1]] },
+        properties: { custom: true, time: Date.now() }
+      };
+      customFeux.push(newFeu);
+      localStorage.setItem('custom_feux', JSON.stringify(customFeux));
 
-    document.getElementById('btn-recenter').onclick = () => {
-      isFollowing = true;
-      if (currentCoords) {
-        map.easeTo({
-          center: currentCoords,
-          bearing: currentHeading,
-          pitch: 55,
-          zoom: 17,
-          duration: 600
+      const src = map.getSource('feux-source');
+      if (src) {
+        src.getData().then(d => {
+          d.features.push(newFeu);
+          src.setData(d);
+          document.getElementById('feux-count').textContent = d.features.length;
         });
       }
+      showToast('🚦 Feu ajouté à votre position !');
+    };
+
+    // Contrôles carte
+    map.on('dragstart', () => { isFollowing = false; });
+    document.getElementById('btn-recenter').onclick = () => {
+      isFollowing = true;
+      if (currentCoords) map.easeTo({ center: currentCoords, bearing: currentHeading, pitch: 55, zoom: 17, duration: 600 });
     };
     document.getElementById('btn-zoom-in').onclick = () => map.zoomIn();
     document.getElementById('btn-zoom-out').onclick = () => map.zoomOut();
 
-    // Géolocalisation haute précision continue
+    // Géocodage inverse léger (nom de rue OSM Nominatim bridé à 1 req / 4s)
+    async function updateStreetName(lng, lat) {
+      const now = Date.now();
+      if (now - lastReverseGeocode < 4000) return;
+      lastReverseGeocode = now;
+      try {
+        const r = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=18`);
+        const json = await r.json();
+        const road = json.address?.road || json.address?.pedestrian || json.address?.suburb || 'Voie sans nom';
+        document.getElementById('street-name').textContent = road;
+      } catch(e){}
+    }
+
+    // Suivi GPS
     if ('geolocation' in navigator) {
       navigator.geolocation.watchPosition(
         (pos) => {
-          document.getElementById('status-overlay').style.display = 'none';
           const { latitude, longitude, accuracy, heading, speed } = pos.coords;
           currentCoords = [longitude, latitude];
 
-          // Badge GPS
+          // Vitesse (km/h)
+          const kmh = speed && speed > 0 ? Math.round(speed * 3.6) : 0;
+          document.getElementById('speed-val').textContent = kmh;
+
+          // Précision
           const dot = document.getElementById('gps-dot');
-          const txt = document.getElementById('gps-text');
-          txt.textContent = `GPS: ±${Math.round(accuracy)}m`;
+          document.getElementById('gps-text').textContent = `GPS: ±${Math.round(accuracy)}m`;
           dot.className = 'dot ' + (accuracy < 15 ? '' : accuracy < 30 ? 'orange' : 'red');
 
-          // Mise à jour de la flèche
           puckMarker.setLngLat(currentCoords);
 
-          // Calcul cap si déplacement
-          if (heading !== null && !isNaN(heading) && (speed === null || speed > 1)) {
+          if (heading !== null && !isNaN(heading) && kmh > 3) {
             currentHeading = heading;
             puckMarker.setRotation(heading);
           }
 
-          // Ajout trace
-          breadcrumbCoords.push(currentCoords);
+          breadcrumb.push(currentCoords);
           if (map.getSource('route-trace')) {
             map.getSource('route-trace').setData({
               type: 'Feature',
-              geometry: { type: 'LineString', coordinates: breadcrumbCoords }
+              geometry: { type: 'LineString', coordinates: breadcrumb }
             });
           }
 
-          // Caméra Waze
+          updateStreetName(longitude, latitude);
+
           if (isFollowing) {
-            map.easeTo({
-              center: currentCoords,
-              bearing: currentHeading,
-              pitch: 55,
-              duration: 800,
-              easing: (t) => t
-            });
+            map.easeTo({ center: currentCoords, bearing: currentHeading, pitch: 55, duration: 800, easing: t => t });
           }
         },
-        (err) => {
-          const overlay = document.getElementById('status-overlay');
-          overlay.style.display = 'flex';
-          overlay.innerHTML = `
-            <h2>⚠️ Signal GPS bloqué</h2>
-            <p>Activez la localisation dans Chrome/Brave.<br><br><b>Brave :</b> Désactivez les Shields (icône lion) pour ce site.</p>
-          `;
-        },
+        (err) => { document.getElementById('street-name').textContent = 'Signal GPS non disponible'; },
         { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 }
       );
     }
