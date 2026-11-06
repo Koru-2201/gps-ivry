@@ -1,0 +1,1895 @@
+﻿{
+    "type":  "FeatureCollection",
+    "features":  [
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3816332,
+                                                              48.8174999
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.4059794,
+                                                              48.8145655
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3830441,
+                                                              48.8157722
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "both"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3794085,
+                                                              48.8169934
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "button_operated":  "no",
+                                            "crossing":  "traffic_signals",
+                                            "highway":  "traffic_signals",
+                                            "source":  "survey",
+                                            "tactile_paving":  "yes",
+                                            "traffic_signals:sound":  "no",
+                                            "traffic_signals:vibration":  "no"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3804289,
+                                                              48.8095494
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3750251,
+                                                              48.8068811
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3734290,
+                                                              48.8177671
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3805959,
+                                                              48.8131577
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3944578,
+                                                              48.8145524
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.4071288,
+                                                              48.8145380
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.4046994,
+                                                              48.8145620
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "direction":  "forward",
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3752623,
+                                                              48.8069679
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3746461,
+                                                              48.8077948
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3886252,
+                                                              48.8105733
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3864845,
+                                                              48.8092771
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "source":  "survey"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3933154,
+                                                              48.8129719
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3969846,
+                                                              48.8021827
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3863821,
+                                                              48.8123637
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3884215,
+                                                              48.8133225
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3849144,
+                                                              48.8116885
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3777881,
+                                                              48.8205824
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "crossing":  "traffic_signals",
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3922792,
+                                                              48.8223324
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3677929,
+                                                              48.8161364
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3700843,
+                                                              48.8131996
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "button_operated":  "no",
+                                            "crossing":  "traffic_signals",
+                                            "crossing:markings":  "zebra",
+                                            "highway":  "traffic_signals",
+                                            "source":  "survey",
+                                            "tactile_paving":  "yes",
+                                            "traffic_signals:sound":  "no",
+                                            "traffic_signals:vibration":  "no"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3706639,
+                                                              48.8131066
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "button_operated":  "no",
+                                            "crossing":  "traffic_signals",
+                                            "highway":  "traffic_signals",
+                                            "source":  "survey",
+                                            "tactile_paving":  "yes",
+                                            "traffic_signals:direction":  "forward",
+                                            "traffic_signals:sound":  "no",
+                                            "traffic_signals:vibration":  "no"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3679794,
+                                                              48.8162009
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3682988,
+                                                              48.8158242
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3834793,
+                                                              48.8109614
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3841258,
+                                                              48.8114023
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "crossing":  "traffic_signals",
+                                            "crossing:markings":  "zebra",
+                                            "highway":  "traffic_signals",
+                                            "tactile_paving":  "yes",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3980289,
+                                                              48.8195481
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3850119,
+                                                              48.8099259
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "crossing":  "traffic_signals",
+                                            "crossing:markings":  "zebra",
+                                            "highway":  "traffic_signals",
+                                            "tactile_paving":  "yes"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3835785,
+                                                              48.8112106
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3839174,
+                                                              48.8112225
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3837108,
+                                                              48.8109531
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "button_operated":  "no",
+                                            "crossing":  "traffic_signals",
+                                            "highway":  "traffic_signals",
+                                            "tactile_paving":  "yes",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward",
+                                            "traffic_signals:vibration":  "no"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3884038,
+                                                              48.8134010
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3893594,
+                                                              48.8138138
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "source":  "survey",
+                                            "traffic_signals:direction":  "both"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.4040063,
+                                                              48.8156033
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "pedestrian_crossing",
+                                            "traffic_signals:direction":  "both"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3737240,
+                                                              48.8091354
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3832979,
+                                                              48.8112007
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3836385,
+                                                              48.8111854
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3732811,
+                                                              48.8091385
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3918083,
+                                                              48.8071270
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3700466,
+                                                              48.8129713
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3699001,
+                                                              48.8129794
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3968520,
+                                                              48.8023435
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3972944,
+                                                              48.8023778
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3972977,
+                                                              48.8025455
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3970829,
+                                                              48.8144477
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3968279,
+                                                              48.8145527
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "direction":  "backward",
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3972535,
+                                                              48.8145496
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "direction":  "forward",
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3970506,
+                                                              48.8146458
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3978074,
+                                                              48.8180125
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3981413,
+                                                              48.8179893
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3979125,
+                                                              48.8181856
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3978341,
+                                                              48.8181503
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3990872,
+                                                              48.8190016
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3991400,
+                                                              48.8188486
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3994166,
+                                                              48.8188715
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3981364,
+                                                              48.8193704
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3976995,
+                                                              48.8195403
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.4001052,
+                                                              48.8186140
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.4002986,
+                                                              48.8186215
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.4001989,
+                                                              48.8186923
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.4016055,
+                                                              48.8179003
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.4019142,
+                                                              48.8179273
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.4015377,
+                                                              48.8180782
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.4027084,
+                                                              48.8176150
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.4026764,
+                                                              48.8173910
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.4034678,
+                                                              48.8164495
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.4036933,
+                                                              48.8161966
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.4034597,
+                                                              48.8161692
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.4042897,
+                                                              48.8145606
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.4043853,
+                                                              48.8147172
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.4041804,
+                                                              48.8145619
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "direction":  "backward",
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.4071911,
+                                                              48.8144097
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "red_turn:right:bicycle":  "yes",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.4053234,
+                                                              48.8127189
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "crossing":  "no",
+                                            "crossing:island":  "no",
+                                            "highway":  "traffic_signals",
+                                            "supervised":  "no",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.4054963,
+                                                              48.8124228
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "crossing":  "traffic_signals",
+                                            "crossing:island":  "no",
+                                            "highway":  "traffic_signals",
+                                            "tactile_paving":  "yes",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3798045,
+                                                              48.8108686
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3801812,
+                                                              48.8108177
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3807298,
+                                                              48.8130507
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3847867,
+                                                              48.8118223
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3953427,
+                                                              48.8203945
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3949700,
+                                                              48.8205793
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3949713,
+                                                              48.8203842
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3814754,
+                                                              48.8177329
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3813577,
+                                                              48.8175310
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3817172,
+                                                              48.8176559
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3897254,
+                                                              48.8098614
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3897530,
+                                                              48.8098750
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3984618,
+                                                              48.8018400
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.4018376,
+                                                              48.8147476
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3923599,
+                                                              48.8225228
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "bus_priority",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3924364,
+                                                              48.8225742
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3929045,
+                                                              48.8223219
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3926796,
+                                                              48.8225603
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "blinker",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3926836,
+                                                              48.8223057
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "bus_priority",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3737005,
+                                                              48.8089707
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3732580,
+                                                              48.8089309
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "traffic_lights",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3736073,
+                                                              48.8089275
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "tram_priority"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3733424,
+                                                              48.8091970
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "tram_priority",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3978711,
+                                                              48.8195429
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3977268,
+                                                              48.8194677
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3967623,
+                                                              48.8190504
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3971149,
+                                                              48.8190281
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3972274,
+                                                              48.8189323
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3971452,
+                                                              48.8189859
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3966289,
+                                                              48.8191656
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3970167,
+                                                              48.8198568
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3970898,
+                                                              48.8199290
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3966685,
+                                                              48.8200380
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3795661,
+                                                              48.8015583
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3953451,
+                                                              48.8138035
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "bicycle":  "yes",
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3901492,
+                                                              48.8215665
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3900746,
+                                                              48.8212989
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3904872,
+                                                              48.8212622
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3904866,
+                                                              48.8215096
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3830801,
+                                                              48.8034732
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3827745,
+                                                              48.8033557
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3827765,
+                                                              48.8035077
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3780519,
+                                                              48.8030521
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3671908,
+                                                              48.8171691
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals":  "signal",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3749124,
+                                                              48.8070322
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3941121,
+                                                              48.8178484
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "direction":  "forward",
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3938875,
+                                                              48.8180845
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "direction":  "backward",
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3941991,
+                                                              48.8180681
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3942568,
+                                                              48.8180008
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3895418,
+                                                              48.8098838
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3897803,
+                                                              48.8100374
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals:direction":  "backward"
+                                        }
+                     },
+                     {
+                         "type":  "Feature",
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              2.3929180,
+                                                              48.8154936
+                                                          ]
+                                      },
+                         "properties":  {
+                                            "highway":  "traffic_signals",
+                                            "traffic_signals:direction":  "forward"
+                                        }
+                     }
+                 ]
+}
