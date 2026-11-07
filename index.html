@@ -11,7 +11,6 @@
     html, body { width:100%; height:100%; overflow:hidden; font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background:#0e131f; }
     #map { width:100%; height:100%; position:absolute; top:0; left:0; }
 
-    /* Top HUD */
     .top-bar {
       position:absolute; top:12px; left:12px; right:12px;
       display:flex; justify-content:space-between; align-items:center;
@@ -27,7 +26,6 @@
     .dot.orange { background:#f39c12; }
     .dot.red { background:#e74c3c; }
 
-    /* Speedometer Waze */
     .speedometer {
       position:absolute; bottom:85px; left:14px; z-index:10;
       width:60px; height:60px; border-radius:50%;
@@ -38,7 +36,6 @@
     .speed-val { font-size:22px; font-weight:900; color:#1e293b; line-height:1; }
     .speed-unit { font-size:9px; font-weight:700; color:#64748b; }
 
-    /* Controls */
     .controls {
       position:absolute; right:14px; bottom:85px;
       display:flex; flex-direction:column; gap:10px; z-index:10;
@@ -54,7 +51,6 @@
     .btn-circle:active { transform:scale(0.92); }
     .btn-add-feu { background:#ff334b; border-color:#ff667a; font-size:16px; }
 
-    /* Bottom Street Card */
     .bottom-bar {
       position:absolute; bottom:16px; left:12px; right:12px;
       pointer-events:none; z-index:10;
@@ -67,7 +63,6 @@
       white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
     }
 
-    /* Waze puck */
     .waze-puck { width:42px; height:42px; position:relative; pointer-events:none; }
     .puck-halo {
       position:absolute; top:6px; left:6px; width:30px; height:30px;
@@ -84,23 +79,23 @@
       100% { transform:scale(2.2); opacity:0; }
     }
 
-    /* Toast notification */
-    #toast {
-      position:absolute; top:60px; left:50%; transform:translateX(-50%);
-      background:rgba(16, 185, 129, 0.95); color:#fff; padding:8px 16px;
-      border-radius:20px; font-size:13px; font-weight:700; z-index:99;
-      display:none; box-shadow:0 4px 12px rgba(0,0,0,0.3);
+    #diag-box {
+      position:absolute; top:55px; left:12px; right:12px;
+      background:rgba(231, 76, 60, 0.92); backdrop-filter:blur(8px);
+      color:#fff; padding:10px 14px; border-radius:12px; font-size:12px;
+      line-height:1.4; z-index:100; display:none; box-shadow:0 4px 15px rgba(0,0,0,0.4);
     }
+    #diag-box b { color:#fff; text-decoration:underline; }
   </style>
 </head>
 <body>
-  <div id="toast"></div>
+  <div id="diag-box"></div>
   <div id="map"></div>
 
   <div class="top-bar">
     <div class="badge" id="badge-gps">
-      <span class="dot" id="gps-dot"></span>
-      <span id="gps-text">GPS: Recherche...</span>
+      <span class="dot orange" id="gps-dot"></span>
+      <span id="gps-text">GPS : Initialisation...</span>
     </div>
     <div class="badge" id="badge-feux">🚦 <span id="feux-count">3469</span> feux</div>
   </div>
@@ -118,11 +113,11 @@
   </div>
 
   <div class="bottom-bar">
-    <div class="street-card" id="street-name">Recherche de voie...</div>
+    <div class="street-card" id="street-name">En attente du signal GPS...</div>
   </div>
 
   <script>
-    const PARIS13_CENTER = [2.3600, 48.8250];
+    const DEFAULT_CENTER = [2.3600, 48.8250];
     let isFollowing = true;
     let currentCoords = null;
     let currentHeading = 0;
@@ -130,21 +125,19 @@
     let customFeux = JSON.parse(localStorage.getItem('custom_feux') || '[]');
     let lastReverseGeocode = 0;
 
+    function showDiag(msg) {
+      const box = document.getElementById('diag-box');
+      box.innerHTML = msg;
+      box.style.display = 'block';
+    }
+
     // Wake Lock
     async function initWakeLock() {
       try { if ('wakeLock' in navigator) await navigator.wakeLock.request('screen'); } catch(e){}
     }
     document.addEventListener('click', initWakeLock, { once: true });
 
-    // Toast
-    function showToast(msg) {
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.style.display = 'block';
-      setTimeout(() => { t.style.display = 'none'; }, 2500);
-    }
-
-    // MapLibre init
+    // Carte
     const map = new maplibre_gl.Map({
       container: 'map',
       style: {
@@ -161,14 +154,13 @@
         },
         layers: [{ id: 'carto-tiles', type: 'raster', source: 'carto', minzoom: 0, maxzoom: 19 }]
       },
-      center: PARIS13_CENTER,
+      center: DEFAULT_CENTER,
       zoom: 16.5,
       pitch: 55,
       bearing: 0,
       attributionControl: false
     });
 
-    // Curseur Waze
     const puckEl = document.createElement('div');
     puckEl.className = 'waze-puck';
     puckEl.innerHTML = `
@@ -180,11 +172,10 @@
       </div>
     `;
     const puckMarker = new maplibre_gl.Marker({ element: puckEl, rotationAlignment: 'map' })
-      .setLngLat(PARIS13_CENTER)
+      .setLngLat(DEFAULT_CENTER)
       .addTo(map);
 
     map.on('load', async () => {
-      // Trace parcours
       map.addSource('route-trace', {
         type: 'geojson',
         data: { type: 'Feature', geometry: { type: 'LineString', coordinates: [] } }
@@ -196,51 +187,29 @@
         paint: { 'line-color': '#3399ff', 'line-width': 6, 'line-opacity': 0.75, 'line-cap': 'round' }
       });
 
-      // Feux officiels + custom
-      const res = await fetch('./feux.geojson');
-      const data = await res.json();
-      data.features.push(...customFeux);
+      try {
+        const res = await fetch('./feux.geojson');
+        const data = await res.json();
+        data.features.push(...customFeux);
 
-      map.addSource('feux-source', { type: 'geojson', data: data });
-      map.addLayer({
-        id: 'feux-glow',
-        type: 'circle',
-        source: 'feux-source',
-        paint: { 'circle-radius': 8, 'circle-color': '#ff334b', 'circle-opacity': 0.35, 'circle-blur': 0.8 }
-      });
-      map.addLayer({
-        id: 'feux-dots',
-        type: 'circle',
-        source: 'feux-source',
-        paint: { 'circle-radius': 4.5, 'circle-color': '#ff2a40', 'circle-stroke-width': 1.5, 'circle-stroke-color': '#ffffff' }
-      });
-
-      document.getElementById('feux-count').textContent = data.features.length;
+        map.addSource('feux-source', { type: 'geojson', data: data });
+        map.addLayer({
+          id: 'feux-glow',
+          type: 'circle',
+          source: 'feux-source',
+          paint: { 'circle-radius': 8, 'circle-color': '#ff334b', 'circle-opacity': 0.35, 'circle-blur': 0.8 }
+        });
+        map.addLayer({
+          id: 'feux-dots',
+          type: 'circle',
+          source: 'feux-source',
+          paint: { 'circle-radius': 4.5, 'circle-color': '#ff2a40', 'circle-stroke-width': 1.5, 'circle-stroke-color': '#ffffff' }
+        });
+        document.getElementById('feux-count').textContent = data.features.length;
+      } catch(e) {}
     });
 
-    // Bouton Ajouter Feu (sur position actuelle)
-    document.getElementById('btn-add-feu').onclick = () => {
-      if (!currentCoords) return showToast('Position GPS introuvable');
-      const newFeu = {
-        type: 'Feature',
-        geometry: { type: 'Point', coordinates: [currentCoords[0], currentCoords[1]] },
-        properties: { custom: true, time: Date.now() }
-      };
-      customFeux.push(newFeu);
-      localStorage.setItem('custom_feux', JSON.stringify(customFeux));
-
-      const src = map.getSource('feux-source');
-      if (src) {
-        src.getData().then(d => {
-          d.features.push(newFeu);
-          src.setData(d);
-          document.getElementById('feux-count').textContent = d.features.length;
-        });
-      }
-      showToast('🚦 Feu ajouté à votre position !');
-    };
-
-    // Contrôles carte
+    // Contrôles
     map.on('dragstart', () => { isFollowing = false; });
     document.getElementById('btn-recenter').onclick = () => {
       isFollowing = true;
@@ -249,7 +218,6 @@
     document.getElementById('btn-zoom-in').onclick = () => map.zoomIn();
     document.getElementById('btn-zoom-out').onclick = () => map.zoomOut();
 
-    // Géocodage inverse léger (nom de rue OSM Nominatim bridé à 1 req / 4s)
     async function updateStreetName(lng, lat) {
       const now = Date.now();
       if (now - lastReverseGeocode < 4000) return;
@@ -257,51 +225,81 @@
       try {
         const r = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=18`);
         const json = await r.json();
-        const road = json.address?.road || json.address?.pedestrian || json.address?.suburb || 'Voie sans nom';
+        const road = json.address?.road || json.address?.pedestrian || json.address?.suburb || 'Voie détectée';
         document.getElementById('street-name').textContent = road;
       } catch(e){}
     }
 
-    // Suivi GPS
+    // Traitement du point GPS
+    function handleLocation(pos) {
+      document.getElementById('diag-box').style.display = 'none';
+      const { latitude, longitude, accuracy, heading, speed } = pos.coords;
+      currentCoords = [longitude, latitude];
+
+      const kmh = speed && speed > 0 ? Math.round(speed * 3.6) : 0;
+      document.getElementById('speed-val').textContent = kmh;
+
+      const dot = document.getElementById('gps-dot');
+      document.getElementById('gps-text').textContent = `GPS: ±${Math.round(accuracy)}m`;
+      dot.className = 'dot ' + (accuracy < 15 ? '' : accuracy < 30 ? 'orange' : 'red');
+
+      puckMarker.setLngLat(currentCoords);
+
+      if (heading !== null && !isNaN(heading) && kmh > 3) {
+        currentHeading = heading;
+        puckMarker.setRotation(heading);
+      }
+
+      breadcrumb.push(currentCoords);
+      if (map.getSource('route-trace')) {
+        map.getSource('route-trace').setData({
+          type: 'Feature',
+          geometry: { type: 'LineString', coordinates: breadcrumb }
+        });
+      }
+
+      updateStreetName(longitude, latitude);
+
+      if (isFollowing) {
+        map.easeTo({ center: currentCoords, bearing: currentHeading, pitch: 55, duration: 800, easing: t => t });
+      }
+    }
+
+    // Gestion erreurs explicites
+    function handleLocationError(err) {
+      const dot = document.getElementById('gps-dot');
+      dot.className = 'dot red';
+      let msg = '';
+      if (err.code === 1) { // PERMISSION_DENIED
+        msg = `📍 <b>Localisation refusée</b><br>Sur Samsung/Chrome : appuyez sur le cadenas à gauche de l'URL > <b>Autorisations</b> > Activer <b>Position</b>. Si vous êtes sur Brave, désactivez les Shields.`;
+      } else if (err.code === 2) { // POSITION_UNAVAILABLE
+        msg = `📡 <b>Signal GPS introuvable</b><br>Vérifiez que la géolocalisation Android est bien allumée dans les paramètres rapides de votre Samsung A15.`;
+      } else if (err.code === 3) { // TIMEOUT
+        msg = `⏳ <b>Délai d'attente GPS dépassé</b><br>Le capteur GPS tarde à fixer les satellites. Déplacez-vous à l'extérieur ou près du pare-brise.`;
+      } else {
+        msg = `Erreur GPS : ${err.message}`;
+      }
+      showDiag(msg);
+      document.getElementById('gps-text').textContent = 'GPS : Erreur';
+    }
+
+    // Stratégie GPS résiliente : Fix rapide (réseau/antennes) + Suivi haute précision
     if ('geolocation' in navigator) {
-      navigator.geolocation.watchPosition(
-        (pos) => {
-          const { latitude, longitude, accuracy, heading, speed } = pos.coords;
-          currentCoords = [longitude, latitude];
-
-          // Vitesse (km/h)
-          const kmh = speed && speed > 0 ? Math.round(speed * 3.6) : 0;
-          document.getElementById('speed-val').textContent = kmh;
-
-          // Précision
-          const dot = document.getElementById('gps-dot');
-          document.getElementById('gps-text').textContent = `GPS: ±${Math.round(accuracy)}m`;
-          dot.className = 'dot ' + (accuracy < 15 ? '' : accuracy < 30 ? 'orange' : 'red');
-
-          puckMarker.setLngLat(currentCoords);
-
-          if (heading !== null && !isNaN(heading) && kmh > 3) {
-            currentHeading = heading;
-            puckMarker.setRotation(heading);
-          }
-
-          breadcrumb.push(currentCoords);
-          if (map.getSource('route-trace')) {
-            map.getSource('route-trace').setData({
-              type: 'Feature',
-              geometry: { type: 'LineString', coordinates: breadcrumb }
-            });
-          }
-
-          updateStreetName(longitude, latitude);
-
-          if (isFollowing) {
-            map.easeTo({ center: currentCoords, bearing: currentHeading, pitch: 55, duration: 800, easing: t => t });
-          }
-        },
-        (err) => { document.getElementById('street-name').textContent = 'Signal GPS non disponible'; },
-        { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 }
+      // 1. Position immédiate (même basse précision pour débloquer l'écran)
+      navigator.geolocation.getCurrentPosition(
+        handleLocation,
+        (err) => { console.warn('Fast fix fallback', err); },
+        { enableHighAccuracy: false, timeout: 8000, maximumAge: 60000 }
       );
+
+      // 2. Flux continu haute précision pour conduite
+      navigator.geolocation.watchPosition(
+        handleLocation,
+        handleLocationError,
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+      );
+    } else {
+      showDiag('Votre navigateur ne prend pas en charge la géolocalisation.');
     }
   </script>
 </body>
